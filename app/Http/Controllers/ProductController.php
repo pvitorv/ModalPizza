@@ -21,11 +21,24 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+        // Validações e mensagens personalizadas
         $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'price' => 'required|numeric',
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric|min:0',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'name.required' => 'O nome do produto é obrigatório.',
+            'name.string' => 'O nome do produto deve ser uma string.',
+            'name.max' => 'O nome do produto não pode exceder 255 caracteres.',
+            'description.required' => 'A descrição do produto é obrigatória.',
+            'description.string' => 'A descrição do produto deve ser uma string.',
+            'price.required' => 'O preço do produto é obrigatório.',
+            'price.numeric' => 'O preço deve ser um número.',
+            'price.min' => 'O preço não pode ser negativo.',
+            'image.image' => 'O arquivo deve ser uma imagem.',
+            'image.mimes' => 'A imagem deve estar no formato jpeg, png, jpg ou gif.',
+            'image.max' => 'A imagem não pode ter mais que 2MB.',
         ]);
 
         $product = new Product();
@@ -51,11 +64,24 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
+        // Validações e mensagens personalizadas
         $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'price' => 'required|numeric',
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric|min:0',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'name.required' => 'O nome do produto é obrigatório.',
+            'name.string' => 'O nome do produto deve ser uma string.',
+            'name.max' => 'O nome do produto não pode exceder 255 caracteres.',
+            'description.required' => 'A descrição do produto é obrigatória.',
+            'description.string' => 'A descrição do produto deve ser uma string.',
+            'price.required' => 'O preço do produto é obrigatório.',
+            'price.numeric' => 'O preço deve ser um número.',
+            'price.min' => 'O preço não pode ser negativo.',
+            'image.image' => 'O arquivo deve ser uma imagem.',
+            'image.mimes' => 'A imagem deve estar no formato jpeg, png, jpg ou gif.',
+            'image.max' => 'A imagem não pode ter mais que 2MB.',
         ]);
 
         $product = Product::findOrFail($id);
@@ -81,6 +107,7 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Produto excluído com sucesso.');
     }
 }
+
 
 
 
