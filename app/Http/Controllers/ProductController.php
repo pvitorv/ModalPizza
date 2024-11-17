@@ -23,6 +23,16 @@ class ProductController extends Controller
         return view('products.create');
     }
 
+    public function shop()
+{
+    $pizzas = Product::where('category', 'Cardapio')->get();
+    $acrescimos = Product::where('category', 'Acréscimos')->get();
+    $bebidas = Product::where('category', 'Bebidas')->get();
+
+    return view('shop', compact('pizzas', 'acrescimos', 'bebidas'));
+}
+
+
     public function store(Request $request)
     {
         // Validações e mensagens personalizadas
