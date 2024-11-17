@@ -1,74 +1,76 @@
 @extends('layouts.customer_layout')
 
 @section('content')
-<div class="container mt-5">
-    <h1 class="mb-4">Faça seu Pedido</h1>
-
-    <!-- Cardápio Section -->
-    <section id="cardapio" class="mb-4">
-        <h2 class="text-xl font-bold mb-2">Cardápio</h2>
-        <div class="row">
-            @foreach($pizzas as $pizza)
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <img src="{{ asset('storage/' . $pizza->image) }}" class="card-img-top" alt="{{ $pizza->name }}">
-                    <div class="card-body">
-                        <h3 class="card-title">{{ $pizza->name }}</h3>
-                        <p class="card-text">{{ $pizza->description }}</p>
-                        <p class="card-text font-bold">R$ {{ number_format($pizza->price, 2, ',', '.') }}</p>
-                        <button class="btn btn-primary" onclick="addToCart('{{ $pizza->id }}')">Adicionar ao Carrinho</button>
-                    </div>
-                </div>
-            </div>
-            @endforeach
-        </div>
-    </section>
-
-    <!-- Acréscimos Section -->
-    <section id="acrescimos" class="mb-4">
-        <h2 class="text-xl font-bold mb-2">Acréscimos</h2>
-        <div class="row">
-            @foreach($acrescimos as $acrescimo)
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <img src="{{ asset('storage/' . $acrescimo->image) }}" class="card-img-top" alt="{{ $acrescimo->name }}">
-                    <div class="card-body">
-                        <h3 class="card-title">{{ $acrescimo->name }}</h3>
-                        <p class="card-text">{{ $acrescimo->description }}</p>
-                        <p class="card-text font-bold">R$ {{ number_format($acrescimo->price, 2, ',', '.') }}</p>
-                        <button class="btn btn-primary" onclick="addToCart('{{ $acrescimo->id }}')">Adicionar ao Carrinho</button>
-                    </div>
-                </div>
-            </div>
-            @endforeach
-        </div>
-    </section>
-
-    <!-- Bebidas Section -->
-    <section id="bebidas" class="mb-4">
-        <h2 class="text-xl font-bold mb-2">Bebidas</h2>
-        <div class="row">
-            @foreach($bebidas as $bebida)
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <img src="{{ asset('storage/' . $bebida->image) }}" class="card-img-top" alt="{{ $bebida->name }}">
-                    <div class="card-body">
-                        <h3 class="card-title">{{ $bebida->name }}</h3>
-                        <p class="card-text">{{ $bebida->description }}</p>
-                        <p class="card-text font-bold">R$ {{ number_format($bebida->price, 2, ',', '.') }}</p>
-                        <button class="btn btn-primary" onclick="addToCart('{{ $bebida->id }}')">Adicionar ao Carrinho</button>
-                    </div>
-                </div>
-            </div>
-            @endforeach
-        </div>
-    </section>
+<div class="mx-auto max-w-7xl ml-3 my-2 mb-8">
+    <h2 class="font-bold text-3xl">Cardápio</h2>
 </div>
 
-<script>
-    function addToCart(productId) {
-        // Adicione a lógica para adicionar o produto ao carrinho
-        alert('Produto ' + productId + ' adicionado ao carrinho!');
-    }
-</script>
+<div id="menu">
+    <main class="grid grid-cols-1 gap-6 mx-auto max-w-7xl px-3 mb-16">
+        @foreach($pizzas as $pizza)
+        <div class="flex gap-4 p-4 bg-white rounded-md shadow-md items-center md:items-start">
+            <img src="{{ asset('storage/' . $pizza->image) }}" alt="{{ $pizza->name }}" class="w-20 h-20 rounded-md object-cover"> <!-- Aumentando o tamanho da imagem -->
+            <div class="flex flex-col flex-grow text-center md:text-left">
+                <p class="font-bold text-xl">{{ $pizza->name }}</p>
+                <p class="text-sm mb-2">{{ $pizza->description }}</p>
+                <p class="font-bold text-lg mb-2">R$ {{ number_format($pizza->price, 2, ',', '.') }}</p>
+                <button style="background-color: #1d4ed8; color: white; padding: 0.25rem 0.75rem; border-radius: 0.25rem; margin-top: 1rem;" class="add-to-cart-btn self-start" data-name="{{ $pizza->name }}" data-price="{{ $pizza->price }}">
+                    Adicionar ao Carrinho
+                </button> <!-- Diminuindo o tamanho do botão -->
+            </div>
+        </div>
+        @endforeach
+    </main>
+</div>
+
+<!-- INÍCIO ACRÉSCIMOS -->
+<div class="mx-auto max-w-7xl px-3 ml-3 my-2">
+    <h2 class="font-bold text-3xl">Acréscimos</h2>
+</div>
+
+<div class="grid grid-cols-1 gap-6 mx-auto max-w-7xl px-3 mb-16" id="menu">
+    @foreach($acrescimos as $acrescimo)
+    <div class="flex gap-4 p-4 bg-white rounded-md shadow-md items-center md:items-start">
+        <img src="{{ asset('storage/' . $acrescimo->image) }}" alt="{{ $acrescimo->name }}" class="w-20 h-20 rounded-md object-cover"> <!-- Aumentando o tamanho da imagem -->
+        <div class="flex flex-col flex-grow text-center md:text-left">
+            <p class="font-bold text-xl">{{ $acrescimo->name }}</p>
+            <p class="text-sm mb-2">{{ $acrescimo->description }}</p>
+            <p class="font-bold text-lg mb-2">R$ {{ number_format($acrescimo->price, 2, ',', '.') }}</p>
+            <button style="background-color: #1d4ed8; color: white; padding: 0.25rem 0.75rem; border-radius: 0.25rem; margin-top: 1rem;" class="add-to-cart-btn self-start" data-name="{{ $acrescimo->name }}" data-price="{{ $acrescimo->price }}">
+                Adicionar ao Carrinho
+            </button> <!-- Diminuindo o tamanho do botão -->
+        </div>
+    </div>
+    @endforeach
+</div>
+
+<!-- INÍCIO BEBIDAS -->
+<div class="mx-auto max-w-7xl px-3 ml-3 my-2">
+    <h2 class="font-bold text-3xl">Bebidas</h2>
+</div>
+
+<div class="grid grid-cols-1 gap-6 mx-auto max-w-7xl px-3 mb-16" id="menu">
+    @foreach($bebidas as $bebida)
+    <div class="flex gap-4 p-4 bg-white rounded-md shadow-md items-center md:items-start">
+        <img src="{{ asset('storage/' . $bebida->image) }}" alt="{{ $bebida->name }}" class="w-20 h-20 rounded-md object-cover"> <!-- Aumentando o tamanho da imagem -->
+        <div class="flex flex-col flex-grow text-center md:text-left">
+            <p class="font-bold text-xl">{{ $bebida->name }}</p>
+            <p class="text-sm mb-2">{{ $bebida->description }}</p>
+            <p class="font-bold text-lg mb-2">R$ {{ number_format($bebida->price, 2, ',', '.') }}</p>
+            <button style="background-color: #1d4ed8; color: white; padding: 0.25rem 0.75rem; border-radius: 0.25rem; margin-top: 1rem;" class="add-to-cart-btn self-start" data-name="{{ $bebida->name }}" data-price="{{ $bebida->price }}">
+                Adicionar ao Carrinho
+            </button> <!-- Diminuindo o tamanho do botão -->
+        </div>
+    </div>
+    @endforeach
+</div>
 @endsection
+
+
+
+
+
+
+
+
+
