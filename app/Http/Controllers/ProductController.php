@@ -11,6 +11,15 @@ class ProductController extends Controller
     // Outros métodos ...
 
     /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $products = Product::all();
+        return view('products.index', compact('products'));
+    }
+
+    /**
      * Show the form for creating a new resource.
      */
     public function create()
@@ -47,5 +56,6 @@ class ProductController extends Controller
 
     // Outros métodos ...
 }
+
 
 

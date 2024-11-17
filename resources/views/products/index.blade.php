@@ -1,30 +1,30 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4">
-    <h1 class="text-white">Produtos</h1>
-    <a href="{{ route('products.create') }}" class="btn bg-primary text-white hover:bg-primaryHover">Adicionar Produto</a>
-    <table class="table mt-4 bg-gray-800 text-white">
+<div class="container mt-5">
+    <h1 class="text-white mb-4">Produtos</h1>
+    <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">Adicionar Produto</a>
+    <table class="table table-dark table-striped">
         <thead>
             <tr>
-                <th class="px-4 py-2">Nome</th>
-                <th class="px-4 py-2">Descrição</th>
-                <th class="px-4 py-2">Preço</th>
-                <th class="px-4 py-2">Ações</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Descrição</th>
+                <th scope="col">Preço</th>
+                <th scope="col">Ações</th>
             </tr>
         </thead>
         <tbody>
             @foreach($products as $product)
-            <tr class="bg-gray-700">
-                <td class="px-4 py-2">{{ $product->name }}</td>
-                <td class="px-4 py-2">{{ $product->description }}</td>
-                <td class="px-4 py-2">{{ $product->price }}</td>
-                <td class="px-4 py-2">
-                    <a href="{{ route('products.edit', $product->id) }}" class="btn bg-warning text-black hover:bg-yellow-600">Editar</a>
-                    <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display:inline-block;">
+            <tr>
+                <td>{{ $product->name }}</td>
+                <td>{{ $product->description }}</td>
+                <td>{{ $product->price }}</td>
+                <td>
+                    <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning">Editar</a>
+                    <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn bg-danger text-white hover:bg-dangerHover">Excluir</button>
+                        <button type="submit" class="btn btn-danger">Excluir</button>
                     </form>
                 </td>
             </tr>
@@ -33,4 +33,5 @@
     </table>
 </div>
 @endsection
+
 
