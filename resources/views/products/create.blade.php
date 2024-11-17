@@ -18,6 +18,14 @@
             <input type="number" step="0.01" class="form-control" id="price" name="price" required>
         </div>
         <div class="form-group mb-4">
+            <label for="category" class="form-label text-white">Categoria</label>
+            <select class="form-control" id="category" name="category" required>
+                <option value="Cardapio">Cardápio</option>
+                <option value="Acréscimos">Acréscimos</option>
+                <option value="Bebidas">Bebidas</option>
+            </select>
+        </div>
+        <div class="form-group mb-4">
             <label for="image" class="form-label text-white">Imagem do Produto</label>
             <input type="file" class="form-control-file" id="image" name="image">
         </div>
@@ -25,5 +33,6 @@
     </form>
 </div>
 @endsection
+
 
 

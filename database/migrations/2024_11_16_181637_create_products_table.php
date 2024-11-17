@@ -14,6 +14,7 @@ return new class extends Migration
             $table->text('description');
             $table->decimal('price', 8, 2);
             $table->string('image')->nullable(); // Adicione esta linha
+            $table->string('category'); // Adicionado para categoria
             $table->timestamps();
         });
     }
@@ -23,5 +24,6 @@ return new class extends Migration
         Schema::dropIfExists('products');
     }
 };
+
 
 

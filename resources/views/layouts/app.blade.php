@@ -32,8 +32,7 @@
 
         <!-- Page Content -->
         <main>
-            <div class="container mx-auto px-4">
-
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <!-- Mensagens de Sucesso e Erro -->
                 @if (session('success'))
                     <div class="alert alert-success">
@@ -62,6 +61,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+
+
 
 
 

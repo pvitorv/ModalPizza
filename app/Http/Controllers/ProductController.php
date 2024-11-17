@@ -9,10 +9,14 @@ use Illuminate\Support\Facades\Storage;
 class ProductController extends Controller
 {
     public function index()
-    {
-        $products = Product::all();
-        return view('products.index', compact('products'));
-    }
+{
+    $products = Product::all(); // Definindo a variável $products
+    $pizzas = Product::where('category', 'Cardapio')->get();
+    $acrescimos = Product::where('category', 'Acréscimos')->get();
+    $bebidas = Product::where('category', 'Bebidas')->get();
+
+    return view('products.index', compact('products', 'pizzas', 'acrescimos', 'bebidas'));
+}
 
     public function create()
     {
@@ -26,6 +30,7 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required|numeric|min:0',
+            'category' => 'required|string', // Adicionado para validação da categoria
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ], [
             'name.required' => 'O nome do produto é obrigatório.',
@@ -36,6 +41,8 @@ class ProductController extends Controller
             'price.required' => 'O preço do produto é obrigatório.',
             'price.numeric' => 'O preço deve ser um número.',
             'price.min' => 'O preço não pode ser negativo.',
+            'category.required' => 'A categoria do produto é obrigatória.', // Mensagem personalizada para categoria
+            'category.string' => 'A categoria do produto deve ser uma string.', // Mensagem personalizada para categoria
             'image.image' => 'O arquivo deve ser uma imagem.',
             'image.mimes' => 'A imagem deve estar no formato jpeg, png, jpg ou gif.',
             'image.max' => 'A imagem não pode ter mais que 2MB.',
@@ -45,6 +52,7 @@ class ProductController extends Controller
         $product->name = $request->name;
         $product->description = $request->description;
         $product->price = $request->price;
+        $product->category = $request->category; // Adicionado para salvar a categoria
 
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('products', 'public');
@@ -69,6 +77,7 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required|numeric|min:0',
+            'category' => 'required|string', // Adicionado para validação da categoria
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ], [
             'name.required' => 'O nome do produto é obrigatório.',
@@ -79,6 +88,8 @@ class ProductController extends Controller
             'price.required' => 'O preço do produto é obrigatório.',
             'price.numeric' => 'O preço deve ser um número.',
             'price.min' => 'O preço não pode ser negativo.',
+            'category.required' => 'A categoria do produto é obrigatória.', // Mensagem personalizada para categoria
+            'category.string' => 'A categoria do produto deve ser uma string.', // Mensagem personalizada para categoria
             'image.image' => 'O arquivo deve ser uma imagem.',
             'image.mimes' => 'A imagem deve estar no formato jpeg, png, jpg ou gif.',
             'image.max' => 'A imagem não pode ter mais que 2MB.',
@@ -88,6 +99,7 @@ class ProductController extends Controller
         $product->name = $request->name;
         $product->description = $request->description;
         $product->price = $request->price;
+        $product->category = $request->category; // Adicionado para atualizar a categoria
 
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('products', 'public');
@@ -107,6 +119,7 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Produto excluído com sucesso.');
     }
 }
+
 
 
 
