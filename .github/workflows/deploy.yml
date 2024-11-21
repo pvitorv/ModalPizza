@@ -1,0 +1,24 @@
+name: Deploy to FTP
+
+on:
+  push:
+    branches:
+      - main  # ou a branch que você estiver utilizando
+
+jobs:
+  ftp-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: FTP Deploy
+      uses: SamKirkland/FTP-Deploy-Action@4.3.0
+      with:
+        ftp-server: ftp://seu-servidor-ftp
+        ftp-username: ${{ secrets.FTP_USERNAME }}
+        ftp-password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: ./  # Diretório local do seu projeto
+        server-dir: /public_html/  # Diretório no servidor
+
