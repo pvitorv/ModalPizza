@@ -1,24 +1,38 @@
-name: Deploy to FTP
+name: Deploy to Hostoo
 
 on:
   push:
     branches:
-      - main  # ou a branch que você estiver utilizando
+      - main
 
 jobs:
-  ftp-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: FTP Deploy
-      uses: SamKirkland/FTP-Deploy-Action@4.3.0
+    - name: Set up FTP credentials
+      env:
+        FTP_SERVER: ${{ secrets.FTP_SERVER }}
+        FTP_PORT: ${{ secrets.FTP_PORT }}
+        FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+        FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+      run: |
+        echo "FTP_SERVER=${{ secrets.FTP_SERVER }}" >> $GITHUB_ENV
+        echo "FTP_PORT=${{ secrets.FTP_PORT }}" >> $GITHUB_ENV
+        echo "FTP_USERNAME=${{ secrets.FTP_USERNAME }}" >> $GITHUB_ENV
+        echo "FTP_PASSWORD=${{ secrets.FTP_PASSWORD }}" >> $GITHUB_ENV
+
+    - name: Deploy to Hostoo via FTP
+      uses: SamKirkland/FTP-Deploy-Action@4.0.0
       with:
-        ftp-server: ftp://seu-servidor-ftp
-        ftp-username: ${{ secrets.FTP_USERNAME }}
-        ftp-password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./  # Diretório local do seu projeto
-        server-dir: /public_html/  # Diretório no servidor
+        server: ${{ env.FTP_SERVER }}
+        username: ${{ env.FTP_USERNAME }}
+        password: ${{ env.FTP_PASSWORD }}
+        port: ${{ env.FTP_PORT }}
+        local-dir: ./public
+        server-dir: /
+
 
