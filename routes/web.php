@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController; // Adicione a importação
 use App\Http\Controllers\ProductController; // Adicione a importação
 use Illuminate\Support\Facades\Route;
 
+
 Route::get('/', function () {
     return view('welcome');
 });
