@@ -20,7 +20,7 @@
 <body class="font-sans antialiased bg-light text-dark">
     <header class="bg-dark text-white py-4">
         <div class="container d-flex align-items-center justify-content-between">
-            <img src="{{ asset('storage/build/assets/pizz.svg') }}" alt="ModalPizza Logo" class="img-fluid" style="max-height: 60px;">
+            <img src="{{ asset('build/assets/pizz.svg') }}" alt="Logo" class="h-8 w-auto">
             <h1 class="m-0">ModalPizza</h1>
             <!-- Botão do Carrinho no Cabeçalho -->
             <button id="cart-button" style="background-color: #1d4ed8; color: white; padding: 0.5rem 1rem; border-radius: 0.25rem;">
