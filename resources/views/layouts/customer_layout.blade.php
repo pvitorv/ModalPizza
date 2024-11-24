@@ -9,7 +9,7 @@
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet">
 
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -60,7 +60,7 @@
     <!-- Rodapé com Botão de Atendimento -->
     <footer class="bg-dark text-white py-4 mt-4">
         <div class="container d-flex justify-content-center">
-            <a href="https://api.whatsapp.com/send?phone=+5564984208487" target="_blank">
+            <a href="https://api.whatsapp.com/send?phone=556484208487" target="_blank">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png" alt="WhatsApp" style="width: 50px; height: 50px;">
             </a>
         </div>
@@ -130,7 +130,7 @@
                 const address = document.getElementById('address').value;
                 const cartDetails = cart.map(item => `${item.name} - R$ ${parseFloat(item.price).toFixed(2).replace('.', ',')}`).join('\n');
                 const message = `Pedido:\n${cartDetails}\nTotal: R$ ${cart.reduce((sum, item) => sum + parseFloat(item.price), 0).toFixed(2).replace('.', ',')}\nEndereço: ${address}`;
-                const whatsappURL = `https://api.whatsapp.com/send?phone=+5564984208487&text=${encodeURIComponent(message)}`;
+                const whatsappURL = `https://api.whatsapp.com/send?phone=556484208487&text=${encodeURIComponent(message)}`;
                 window.open(whatsappURL, '_blank');
 
                 // Esvaziar o carrinho após envio do pedido
@@ -174,6 +174,7 @@
     </script>
 </body>
 </html>
+
 
 
 
