@@ -20,7 +20,7 @@
 <body class="font-sans antialiased bg-light text-dark">
     <header class="bg-dark text-white py-4">
         <div class="container d-flex align-items-center justify-content-between">
-            <img src="{{ asset('build/assets/pizz.svg') }}" alt="ModalPizza Logo" class="img-fluid" style="max-height: 60px;"> <!-- Ajuste o tamanho aqui -->
+            <img src="{{ asset('storage/build/assets/pizz.svg') }}" alt="ModalPizza Logo" class="img-fluid" style="max-height: 60px;">
             <h1 class="m-0">ModalPizza</h1>
             <!-- Botão do Carrinho no Cabeçalho -->
             <button id="cart-button" style="background-color: #1d4ed8; color: white; padding: 0.5rem 1rem; border-radius: 0.25rem;">
@@ -43,6 +43,10 @@
             <ul id="cart-items">
                 <!-- Itens do carrinho serão adicionados aqui -->
             </ul>
+            <li id="total-amount"><strong>Total:</strong> R$ 0,00</li>
+            <button id="add-location" style="background-color: #1d4ed8; color: white; padding: 0.5rem 1rem; border-radius: 0.25rem; margin-top: 1rem; display: block;">
+                Adicionar Localização (Google Maps)
+            </button>
             <input type="text" id="address" placeholder="Digite seu endereço ou localização" class="w-full border p-2 my-2">
             <button id="finalize-order" style="background-color: #1d4ed8; color: white; padding: 0.5rem 1rem; border-radius: 0.25rem;">
                 Finalizar Pedido
@@ -52,6 +56,15 @@
             </button>
         </div>
     </div>
+
+    <!-- Rodapé com Botão de Atendimento -->
+    <footer class="bg-dark text-white py-4 mt-4">
+        <div class="container d-flex justify-content-center">
+            <a href="https://api.whatsapp.com/send?phone=+5564984208487" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png" alt="WhatsApp" style="width: 50px; height: 50px;">
+            </a>
+        </div>
+    </footer>
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -80,13 +93,15 @@
 
                 const cartItems = document.getElementById('cart-items');
                 cartItems.innerHTML = '';
+                let total = 0;
                 cart.forEach((item, index) => {
                     const listItem = document.createElement('li');
                     listItem.innerHTML = `
                         ${item.name} - R$ ${parseFloat(item.price).toFixed(2).replace('.', ',')}
-                        <button class="remove-from-cart" data-index="${index}">Remover</button>
+                        <button class="remove-from-cart" data-index="${index}" style="color: red; margin-left: 1rem;">Remover</button>
                     `;
                     cartItems.appendChild(listItem);
+                    total += parseFloat(item.price);
                 });
 
                 // Adicionar evento de remoção
@@ -97,6 +112,9 @@
                         updateCart();
                     });
                 });
+
+                const totalElement = document.getElementById('total-amount');
+                totalElement.innerHTML = `<strong>Total:</strong> R$ ${total.toFixed(2).replace('.', ',')}`;
             }
 
             // Abrir/Fechar modal do carrinho
@@ -111,14 +129,52 @@
             document.getElementById('finalize-order').addEventListener('click', function () {
                 const address = document.getElementById('address').value;
                 const cartDetails = cart.map(item => `${item.name} - R$ ${parseFloat(item.price).toFixed(2).replace('.', ',')}`).join('\n');
-                const message = `Pedido:\n${cartDetails}\nEndereço: ${address}`;
-                const whatsappURL = `https://api.whatsapp.com/send?phone=YOUR_PHONE_NUMBER&text=${encodeURIComponent(message)}`;
+                const message = `Pedido:\n${cartDetails}\nTotal: R$ ${cart.reduce((sum, item) => sum + parseFloat(item.price), 0).toFixed(2).replace('.', ',')}\nEndereço: ${address}`;
+                const whatsappURL = `https://api.whatsapp.com/send?phone=+5564984208487&text=${encodeURIComponent(message)}`;
                 window.open(whatsappURL, '_blank');
+
+                // Esvaziar o carrinho após envio do pedido
+                cart = [];
+                updateCart();
+
+                // Fechar o modal do carrinho
+                cartModal.classList.add('hidden');
+
+                // Recarregar a página para atualizar o estado do carrinho
+                location.reload();
+            });
+
+            // Adicionar localização por Google Maps
+            document.getElementById('add-location').addEventListener('click', function () {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        const latitude = position.coords.latitude;
+                        const longitude = position.coords.longitude;
+                        const googleMapsURL = `https://maps.google.com/?q=${latitude},${longitude}`;
+                        document.getElementById('address').value = googleMapsURL;
+                    });
+                } else {
+                    alert("Geolocation is not supported by this browser.");
+                }
             });
         });
     </script>
+
+    <!-- Script do WhatsApp -->
+    <script type="text/javascript">
+        window.onload = function(){
+        (function(d, script) {
+        script = d.createElement('script');
+        script.type = 'text/javascript';
+        script.async = true;
+        script.src = 'https://w.app/widget-v1/cf0u29.js';
+        d.getElementsByTagName('head')[0].appendChild(script);
+        }(document));
+        };
+    </script>
 </body>
 </html>
+
 
 
 
