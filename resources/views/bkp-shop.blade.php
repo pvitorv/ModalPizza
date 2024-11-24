@@ -65,13 +65,3 @@
     @endforeach
 </div>
 @endsection
-
-
-
-
-
-
-
-
-
-
