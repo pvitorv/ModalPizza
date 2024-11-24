@@ -48,8 +48,8 @@
                 Adicionar Localização (Google Maps)
             </button>
             <input type="text" id="address" placeholder="Digite seu endereço ou localização" class="w-full border p-2 my-2">
-            <button id="finalize-order" style="background-color: #1d4ed8; color: white; padding: 0.5rem 1rem; border-radius: 0.25rem;">
-                Finalizar Pedido
+            <button id="finalize-order" style="background-color: #1d4ed8; color: white; padding: 0.5rem 1rem; border-radius: 0.25rem;" disabled>
+                Finalizar Pedido (Em breve)
             </button>
             <button id="close-cart" style="background-color: #d80027; color: white; padding: 0.5rem 1rem; border-radius: 0.25rem; margin-top: 1rem;">
                 Fechar
@@ -125,23 +125,10 @@
             cartButton.addEventListener('click', () => cartModal.classList.remove('hidden'));
             closeCart.addEventListener('click', () => cartModal.classList.add('hidden'));
 
-            // Finalizar pedido
-            document.getElementById('finalize-order').addEventListener('click', function () {
-                const address = document.getElementById('address').value;
-                const cartDetails = cart.map(item => `${item.name} - R$ ${parseFloat(item.price).toFixed(2).replace('.', ',')}`).join('\n');
-                const message = `Pedido:\n${cartDetails}\nTotal: R$ ${cart.reduce((sum, item) => sum + parseFloat(item.price), 0).toFixed(2).replace('.', ',')}\nEndereço: ${address}`;
-                const whatsappURL = `https://api.whatsapp.com/send?phone=556484208487&text=${encodeURIComponent(message)}`;
-                window.open(whatsappURL, '_blank');
-
-                // Esvaziar o carrinho após envio do pedido
-                cart = [];
-                updateCart();
-
-                // Fechar o modal do carrinho
-                cartModal.classList.add('hidden');
-
-                // Recarregar a página para atualizar o estado do carrinho
-                location.reload();
+            // Desabilitar função do botão "Finalizar Pedido"
+            document.getElementById('finalize-order').addEventListener('click', function (e) {
+                e.preventDefault();
+                alert("Esta funcionalidade estará disponível em breve!");
             });
 
             // Adicionar localização por Google Maps
@@ -174,6 +161,7 @@
     </script>
 </body>
 </html>
+
 
 
 
